@@ -1,0 +1,11 @@
+server:
+  port:
+    8050
+
+spring:
+  application:    name: API-Gateway  cloud:    gateway:      routes:      - id: vendor
+        uri: lb://vendor-service
+        predicates:        - Path=/vendor/**
+      - id: admin
+        uri: lb://admin-service
+        predicates:        - Path=/admin/**
