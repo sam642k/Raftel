@@ -33,7 +33,7 @@ public class VendorController {
 	public void addProduct() {
 	}
 	
-	@RequestMapping("/get-products")
+	@GetMapping("/get-products")
 	public Product getProducts() {
 		return new Product(1, "samsung", "mobile");
 	}

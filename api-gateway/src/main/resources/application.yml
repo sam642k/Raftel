@@ -9,11 +9,11 @@ spring:
       - id: admin
         uri: lb://admin-service
         predicates:        - Path=/admin/**
-      - id: catalog-service
+      - id: catalog
         uri: lb://catalog-service
         predicates:
-        - Path=/catalog-service/**
-      - id: catalog-view
-        uri: http://localhost:4210/catalog
-        predicates:
         - Path=/catalog/**
+      - id: cart
+        uri: lb://cart-service
+        predicates:
+        - Path=/cart/**
