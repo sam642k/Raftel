@@ -3,7 +3,7 @@ package com.raftel.cartservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="idg")
+@Document(collection="Cart_ID")
 public class IdGenerator {
 	
 	@Id

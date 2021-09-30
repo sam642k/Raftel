@@ -1,7 +1,5 @@
 package com.raftel.cartservice.model;
 
-import java.util.Objects;
-
 import org.springframework.data.annotation.Id;
 
 public class Product {

@@ -3,7 +3,7 @@ package com.raftel.catalogservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "product")
+@Document(collection= "Products")
 public class Product {
 	
 	@Id

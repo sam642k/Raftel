@@ -47,7 +47,7 @@ public class CartController {
 		return carts.get(0);
 	}
 	
-	@PostMapping("/create/{userId}")
+	@GetMapping("/create/{userId}")
 	public void createCart(@PathVariable("userId") int userId) {
 		IdGenerator idGen= idRepo.findById("cartId").get();
 		int id= idGen.getSeq();
@@ -119,7 +119,7 @@ public class CartController {
 		cartRepo.delete(getCart(userId));
 	}
 	
-	public String cartFallBack(Exception e) {
+	public String cartFallBack(int x, int y, Throwable e) {
 		return "Product service is down";
 	}
 }
