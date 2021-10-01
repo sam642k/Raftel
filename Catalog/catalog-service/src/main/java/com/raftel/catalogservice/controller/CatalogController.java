@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,24 +28,35 @@ public class CatalogController {
 	@Autowired
 	IdRepository idRepo;
 	
+	@PostMapping("")
+	public void addProduct(@RequestBody Product product) {
+		IdGenerator idGen= idRepo.findById("prodId").get();
+		product.setId(idGen.getSeq());
+		idGen.setSeq(idGen.getSeq()+1);
+		idRepo.save(idGen);
+		prodRepo.save(product);
+	}
+	
 	@GetMapping("")
-	public List<Product> getAll(){
+	public List<Product> getAllProducts(){
 		List<Product> list= new ArrayList<>();
 		prodRepo.findAll().stream().forEach(list::add);
 		return list;
 	}
 	
-	@GetMapping("/idSeq")
-	public int getNextId() {
-		IdGenerator idGen= idRepo.findById("prodId").get();
-		idGen.setSeq(idGen.getSeq()+1);
-		idRepo.save(idGen);
-		return idGen.getSeq()-1;
-	}
-	
 	@GetMapping("/{id}")
 	public Product getProduct(@PathVariable("id") int id) {
 		return prodRepo.findById(id).get();
+	}
+	
+	@PutMapping("")
+	public void updateProduct(@RequestBody Product product) {
+		prodRepo.save(product);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteProduct(@PathVariable("id") int id) {
+		prodRepo.deleteById(id);
 	}
 	
 }

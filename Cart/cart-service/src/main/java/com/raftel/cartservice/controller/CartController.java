@@ -47,7 +47,7 @@ public class CartController {
 		return carts.get(0);
 	}
 	
-	@GetMapping("/create/{userId}")
+	@PostMapping("/create/{userId}")
 	public void createCart(@PathVariable("userId") int userId) {
 		IdGenerator idGen= idRepo.findById("cartId").get();
 		int id= idGen.getSeq();
@@ -58,7 +58,7 @@ public class CartController {
 	
 	@PutMapping("/add/{userId}/{prodId}")
 	@CircuitBreaker(name = "addToCart", fallbackMethod="cartFallBack")
-	public void addItem(@PathVariable("prodId") int prodId, @PathVariable("userId") int userId) {
+	public Cart addItem(@PathVariable("prodId") int prodId, @PathVariable("userId") int userId) {
 		Product product= restTemplate.getForObject("http://catalog-service/catalog/"+prodId, Product.class);
 		System.out.println(product);
 		Cart cart= getCart(userId);
@@ -77,10 +77,12 @@ public class CartController {
 		cart.setTotal(0);
 		items.values().forEach(item -> cart.setTotal(cart.getTotal()+item.getPrice()));
 		cartRepo.save(cart);
+		return cart;
 	}
 	
 	@PutMapping("/remove/{userId}/{prodId}")
-	public void removeItem(@PathVariable("prodId") int prodId, @PathVariable("userId") int userId) {
+	@CircuitBreaker(name = "removeFromCart", fallbackMethod="cartFallBack")
+	public Cart removeItem(@PathVariable("prodId") int prodId, @PathVariable("userId") int userId) {
 		Product product= restTemplate.getForObject("http://catalog-service/catalog/"+prodId, Product.class);
 		System.out.println(product);
 		Cart cart= getCart(userId);
@@ -97,7 +99,8 @@ public class CartController {
 		cart.setItems(items);
 		cart.setTotal(0);
 		items.values().forEach(item -> cart.setTotal(cart.getTotal()+item.getPrice()));
-		cartRepo.save(cart);	
+		cartRepo.save(cart);
+		return cart;
 	}
 	
 	@GetMapping("/cartItems/{userId}")
@@ -119,7 +122,7 @@ public class CartController {
 		cartRepo.delete(getCart(userId));
 	}
 	
-	public String cartFallBack(int x, int y, Throwable e) {
-		return "Product service is down";
+	public Cart cartFallBack(int prodId, int userId, Exception e) {
+		return getCart(userId);
 	}
 }

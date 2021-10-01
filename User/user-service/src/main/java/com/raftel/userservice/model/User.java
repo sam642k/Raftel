@@ -1,64 +1,104 @@
 package com.raftel.userservice.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.IndexDirection;
-import org.springframework.data.mongodb.core.index.Indexed;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
+@Document(collection = "Users")
 public class User {
 	
 	@Id
-	private String id;
-	@Indexed(unique = true, direction = IndexDirection.DESCENDING, dropDups = true)
+	private int id;
+	private String name;
 	private String email;
 	private String password;
-	private String fullname;
-	private boolean enabled;
-	private String roles;
-	public String getId() {
+	private long number;
+	private String gender;
+	private Address address;
+	private String role;
+	
+	public User() {}
+
+	public User(int id, String name, String email, String password, long number, String gender, Address address,
+			String role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.number = number;
+		this.gender = gender;
+		this.address = address;
+		this.role = role;
+	}
+
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+
+	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFullname() {
-		return fullname;
+
+	public long getNumber() {
+		return number;
 	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+
+	public void setNumber(long number) {
+		this.number = number;
 	}
-	public boolean isEnabled() {
-		return enabled;
+
+	public String getGender() {
+		return gender;
 	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
-	public String getRoles() {
-		return roles;
+
+	public Address getAddress() {
+		return address;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullname=" + fullname
-				+ ", enabled=" + enabled + ", roles=" + roles + "]";
-	}
-	
-	
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", number="
+				+ number + ", gender=" + gender + ", address=" + address + ", role=" + role + "]";
+	}	
 	
 }

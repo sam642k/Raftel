@@ -1,9 +1,11 @@
 package com.raftel.catalogservice.model;
 
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection= "Products")
+@Document(collection= "products")
 public class Product {
 	
 	@Id
@@ -12,6 +14,7 @@ public class Product {
 	private String category;
 	private double price;
 	private String description;
+	private Map<String, String> specifications;
 	
 	public int getId() {
 		return id;
@@ -39,14 +42,24 @@ public class Product {
 	}
 	public String getDescription() {
 		return description;
-	}
+	} 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Map<String, String> getSpecifications() {
+		return specifications;
+	}
+	public void setSpecifications(Map<String, String> specifications) {
+		this.specifications = specifications;
 	}
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", price=" + price + ", description="
-				+ description + "]";
+				+ description + ", specifications=" + specifications + "]";
 	}
+	
+	
+	
 	
 }
