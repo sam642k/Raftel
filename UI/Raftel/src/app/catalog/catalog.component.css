@@ -1,0 +1,28 @@
+
+
+.row{
+    margin: 0 10px;
+}
+
+.col{
+    padding: 5px 5px;
+}
+
+.card{
+    height: 480px;
+}
+
+.card:hover{
+    border: 3px solid cornflowerblue;
+    border-radius: 10px;
+}
+
+.cat-img{
+    border-bottom: 3px solid black;
+    border-radius: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

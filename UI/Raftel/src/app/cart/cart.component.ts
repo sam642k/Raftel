@@ -1,0 +1,96 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ItemModel } from '../models/item-model';
+import { CartService } from '../services/cart.service';
+import { CatalogService } from '../services/catalog.service';
+import { OrderService } from '../services/order.service';
+
+
+@Component({
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
+})
+export class CartComponent implements OnInit, OnDestroy {
+
+  public userId= -1;
+  public name= '';
+  public cart: any;
+  public items: ItemModel[]=[];
+  public noOfItems: Number=0;
+  public itemsExist: any;
+  constructor(private router: Router, private route: ActivatedRoute, private catalogService: CatalogService, private cartService: CartService, private orderService: OrderService) { }
+  
+
+  ngOnInit(): void {
+    this.userId= parseInt(sessionStorage.getItem('userId') || '-1');
+    this.name= sessionStorage.getItem('name') || '';
+    console.log(this.userId);
+    
+    this.cartService.getCart(this.userId).subscribe(data =>{
+      this.cart=data;
+      console.log(this.cart);
+    });
+
+    this.cartService.getItems(this.userId).subscribe(data=>{
+      this.items=data;
+      console.log(this.items[0].prodName);
+    });
+
+    this.cartService.cartItems(this.userId).subscribe(data=>{
+      this.noOfItems=data;
+      if(this.noOfItems>0){
+        this.itemsExist=true;
+      }
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  addToCart(item: ItemModel){
+    this.cartService.addToCart(this.userId, item.id).subscribe(data=>{
+      for(let _item of this.items){
+        if(_item.id==item.id){
+          _item.quantity++;
+          this.catalogService.getProduct(item.id).subscribe(data=>{
+            _item.price+= data.price;
+            this.cart.total+= data.price;
+          });
+        }
+      }
+    });
+  }
+
+  removeFromCart(item: ItemModel){
+    this.cartService.removeFromCart(this.userId, item.id).subscribe();
+    for(let _item of this.items){
+      if(_item.id==item.id){
+        _item.quantity--;
+        this.catalogService.getProduct(item.id).subscribe(data=>{
+          _item.price-= data.price;
+          this.cart.total-= data.price;
+        });
+      }
+    }
+  }
+
+  checkOut(){
+    let order={
+      id: -1,
+      customerId: this.userId,
+      amount: this.cart.total,
+      items: this.cart.items,
+      date: null,
+      status: "Delivered"
+    };
+    this.cartService.clearCart(this.userId).subscribe();
+    this.orderService.checkOut(order).subscribe(data=> this.router.navigate(['/order']));
+
+  }
+
+
+
+}

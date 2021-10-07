@@ -3,16 +3,16 @@ server:
     8050
 
 spring:
-  application:    name: API-Gateway  cloud:    gateway:      routes:
+  application:    name: API-Gateway  cloud:    gateway:
+      default-filters:      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:        cors-configurations:          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"      routes:
       - id: user
         uri: lb://user-service
         predicates:
-        - Path=/user/**      - id: vendor
-        uri: lb://vendor-service
-        predicates:        - Path=/vendor/**
-      - id: admin
-        uri: lb://admin-service
-        predicates:        - Path=/admin/**
+        - Path=/user/**
       - id: catalog
         uri: lb://catalog-service
         predicates:
@@ -21,3 +21,8 @@ spring:
         uri: lb://cart-service
         predicates:
         - Path=/cart/**
+      - id: order
+        uri: lb://order-service
+        predicates:
+        - Path=/order/**
+          main:    web-application-type: reactive

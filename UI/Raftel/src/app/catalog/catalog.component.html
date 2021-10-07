@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-danger text-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" routerLink="">Raftel</a>
+      <div class="navbar-nav-scroll">
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="">Home</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/cart" class="nav-link">Cart</a>
+          </li>
+          <li *ngIf="isLoggedIn" class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{name}}</a>
+          </li>
+          <li *ngIf="!isLoggedIn" class="nav-item">
+            <a class="nav-link" routerLink="/login">Sign in</a>
+          </li>
+          <li *ngIf="isLoggedIn" class="nav-item">
+            <a class="nav-link" routerLink="/logout">Logout</a>
+          </li>
+          <li *ngIf="!isLoggedIn" class="nav-item">
+            <a class="nav-link" routerLink="/register">Sign up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<div class="content">
+<div class="row row-cols-5">
+    <div class="col" *ngFor="let product of products">
+        <div class="card">
+            <a routerLink='/product/{{product.id}}'>
+                <div><img class="card-img-top cat-img" src="{{product.image}}" height="300px"></div>
+            </a>
+            <div class="card-body">
+                <a routerLink='/product/{{product.id}}'><h4 class=" card-title"><b>{{product.name}}</b></h4></a>
+                <p>{{product.description.slice(0,25)+"..."}}</p>
+                <b>{{product.price}}</b>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

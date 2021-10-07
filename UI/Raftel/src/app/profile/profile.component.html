@@ -1,0 +1,56 @@
+<nav class="navbar navbar-dark bg-danger text-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" routerLink="">Raftel</a>
+      <div class="navbar-nav-scroll">
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/profile">{{name}}</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/cart" class="nav-link">Cart</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+<div class="content">
+<h1>User Profile</h1>
+
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>{{user.name}}</td>
+    </tr>
+    <tr>
+        <td>Username</td>
+        <td>{{user.username}}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <td>Number</td>
+        <td>{{user.number}}</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{user.gender}}</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>
+            {{user.address.house}},
+            {{user.address.street}},
+            {{user.address.area}},
+            {{user.address.city}},
+            {{user.address.state}},
+            {{user.address.country}}
+        </td>
+    </tr>
+</table>
+<button (click)="test()" class="btn btn-primary">My Orders</button>
+</div>
