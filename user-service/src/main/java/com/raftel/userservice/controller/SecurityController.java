@@ -64,6 +64,7 @@ public class SecurityController {
 	
 	@PostMapping("/register")
 	public boolean register(@RequestBody User user) {
+		System.out.println(user);
 		List<String> usernames= new ArrayList<>();
 		userRepo.findAll().forEach(u-> usernames.add(u.getUsername()));
 		
@@ -74,7 +75,7 @@ public class SecurityController {
 		user.setId(idGen.getSeq());
 		idGen.setSeq(idGen.getSeq()+1);
 		idRepo.save(idGen);
-		user.setRole("Customer");
+		user.setRole("USER");
 		userRepo.save(user);
 		
 		return true;

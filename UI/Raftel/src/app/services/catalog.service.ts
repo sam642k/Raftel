@@ -21,4 +21,12 @@ export class CatalogService {
     return this.http.post<ProductModel>(`http://localhost:8050/catalog`, product);
   }
 
+  deleteProduct(id: number){
+    return this.http.delete<ProductModel>(`http://localhost:8050/catalog/${id}`);
+  }
+
+  editProduct(product: ProductModel){
+    return this.http.put<ProductModel>(`http://localhost:8050/catalog`, product);
+  }
+
 }

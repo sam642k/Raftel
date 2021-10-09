@@ -10,7 +10,8 @@ import { CatalogService } from '../services/catalog.service';
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-  isLoggedIn= false;
+  public admin=false;
+  public isLoggedIn= false;
   public name='';
   public products: ProductModel[]=[];
   constructor(private catalogService: CatalogService, private authService: AuthService) { }
@@ -22,7 +23,14 @@ export class CatalogComponent implements OnInit {
     });
     this.isLoggedIn= this.authService.isLoggedIn();
     this.name=sessionStorage.getItem('name') || '';
+    if(parseInt(sessionStorage.getItem('userId') || '')==1){
+      this.admin=true;
+    }
     
+  }
+
+  delete(id: number){
+    this.catalogService.deleteProduct(id).subscribe();
   }
 
 }

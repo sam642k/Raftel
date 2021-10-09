@@ -11,7 +11,7 @@ import { OrderService } from '../services/order.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit {
 
   public userId= -1;
   public name= '';
@@ -46,22 +46,19 @@ export class CartComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-
   addToCart(item: ItemModel){
-    this.cartService.addToCart(this.userId, item.id).subscribe(data=>{
-      for(let _item of this.items){
-        if(_item.id==item.id){
-          _item.quantity++;
-          this.catalogService.getProduct(item.id).subscribe(data=>{
-            _item.price+= data.price;
-            this.cart.total+= data.price;
-          });
-        }
+    this.cartService.addToCart(this.userId, item.id).subscribe();
+    for(let _item of this.items){
+      if(_item.id==item.id){
+        _item.quantity++;
+        this.catalogService.getProduct(item.id).subscribe(data=>{
+          _item.price+= data.price;
+          this.cart.total+= data.price;
+        });
       }
-    });
+    }
+    console.log(this.cart.items);
+    
   }
 
   removeFromCart(item: ItemModel){
@@ -75,9 +72,13 @@ export class CartComponent implements OnInit, OnDestroy {
         });
       }
     }
+    console.log(this.cart.items);
+    
   }
 
   checkOut(){
+    console.log(this.cart.items);
+    
     let order={
       id: -1,
       customerId: this.userId,
@@ -87,7 +88,7 @@ export class CartComponent implements OnInit, OnDestroy {
       status: "Delivered"
     };
     this.cartService.clearCart(this.userId).subscribe();
-    this.orderService.checkOut(order).subscribe(data=> this.router.navigate(['/order']));
+    this.orderService.checkOut(order).subscribe(data=> this.router.navigate(['/order', '-1']));
 
   }
 

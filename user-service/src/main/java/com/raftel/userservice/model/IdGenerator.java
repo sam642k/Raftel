@@ -3,7 +3,7 @@ package com.raftel.userservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="User_ID")
+@Document(collection="userId")
 public class IdGenerator {
 	
 	@Id

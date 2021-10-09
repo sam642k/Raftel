@@ -12,8 +12,4 @@ export class UserService {
   getUser(id: number){
     return this.http.get<UserModel>(`http://localhost:8050/user/${id}`);
   }
-
-  test(){
-    return this.http.put("http://localhost:8050/authenticate", {username: "samee", password: "asdfg"});
-  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subscriber } from 'rxjs';
+import { UserModel } from '../models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class AuthService {
     );
   }
 
+  register(user: UserModel){
+    return this.http.post("http://localhost:8050/user/register", user);
+  }
+
   isLoggedIn(){
     let user= sessionStorage.getItem('username');
     console.log("------------"+user);
@@ -35,7 +40,7 @@ export class AuthService {
   }
 
   logout(){
-    sessionStorage.removeItem('username');
+    sessionStorage.clear();
   }
 
 

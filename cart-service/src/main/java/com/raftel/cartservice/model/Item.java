@@ -5,16 +5,18 @@ public class Item {
 	String image;
 	String prodName;
 	double price;
+	//double itemTotal;
 	int quantity;
 	
 	public Item() {}
 
-	public Item(int id, String image, String prodName, double price, int quantity) {
+	public Item(int id, String image, String prodName, double price, /*double itemTotal,*/ int quantity) {
 		super();
 		this.id = id;
 		this.image = image;
 		this.prodName = prodName;
 		this.price = price;
+		//this.itemTotal = itemTotal;
 		this.quantity = quantity;
 	}
 
@@ -49,6 +51,12 @@ public class Item {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	/*
+	 * public double getItemTotal() { return itemTotal; }
+	 * 
+	 * public void setItemTotal(double itemTotal) { this.itemTotal = itemTotal; }
+	 */
 
 	public int getQuantity() {
 		return quantity;

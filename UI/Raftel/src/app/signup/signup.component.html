@@ -10,10 +10,10 @@
             <a routerLink="/cart" class="nav-link">Cart</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/login">Sign in</a>
+            <a class="nav-link" routerLink="/login">Sign in</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/register">Sign up</a>
+            <a class="nav-link active" routerLink="/register">Sign up</a>
           </li>
         </ul>
       </div>
@@ -21,5 +21,64 @@
 </nav>
 
 <div class="content">
-    
+    <div class="container col-5">
+      <form [formGroup]="signupForm">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control" [class.is-invalid]="signupForm.controls.name.invalid && signupForm.controls.name.touched">
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" formControlName="username" class="form-control" [class.is-invalid]="signupForm.controls.username.invalid && signupForm.controls.username.touched">
+        </div>
+        <div class="form-group">
+          <label>Eamil</label>
+          <input type="email" formControlName="email" class="form-control" [class.is-invalid]="signupForm.controls.email.invalid && signupForm.controls.email.touched">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" class="form-control" [class.is-invalid]="signupForm.controls.password.invalid && signupForm.controls.password.touched">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="cpassword" class="form-control" [class.is-invalid]="signupForm.controls.cpassword.invalid && signupForm.controls.cpassword.touched">
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="number" formControlName="number" class="form-control" [class.is-invalid]="signupForm.controls.number.invalid && signupForm.controls.number.touched">
+        </div><br>
+        <div class="form-group">
+          <label>Gender: </label> 
+          <input type="radio" formControlName="gender" id="male" value="Male"><label for="male">Male</label>
+          <input type="radio" formControlName="gender" id="female" value="Female"><label for="female">Female</label>
+        </div>
+      </form>
+      <form [formGroup]="address">
+        <div class="form-group">
+          <label>House</label>
+          <input type="text" formControlName="house" class="form-control" [class.is-invalid]="address.controls.house.invalid && address.controls.house.touched">
+        </div>
+        <div class="form-group">
+          <label>Street</label>
+          <input type="text" formControlName="street" class="form-control" [class.is-invalid]="address.controls.street.invalid && address.controls.street.touched">
+        </div>
+        <div class="form-group">
+          <label>Area</label>
+          <input type="text" formControlName="area" class="form-control" [class.is-invalid]="address.controls.area.invalid && address.controls.area.touched">
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" formControlName="city" class="form-control" [class.is-invalid]="address.controls.city.invalid && address.controls.city.touched">
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" formControlName="state" class="form-control" [class.is-invalid]="address.controls.state.invalid && address.controls.state.touched">
+        </div>
+        <div class="form-group">
+          <label>Country</label>
+          <input type="text" formControlName="country" class="form-control" [class.is-invalid]="address.controls.country.invalid && address.controls.country.touched">
+        </div><br>
+        <button [disabled]="!signupForm.valid" class="form-control btn btn-primary" (click)="register()">Register</button>
+      </form><br><br>
+    </div>
 </div>

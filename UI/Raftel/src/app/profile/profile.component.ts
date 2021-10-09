@@ -25,9 +25,4 @@ export class ProfileComponent implements OnInit {
     this.name=sessionStorage.getItem('name') || '';
   }
 
-  test(){
-    this.userService.test().subscribe(data=> console.log(data));
-    this.router.navigate(['/all-orders']);
-  }
-
 }

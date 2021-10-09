@@ -6,22 +6,15 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AuthHttpInterceptorService } from './services/auth-http-interceptor.service';
-import { LogoutComponent } from './logout/logout.component';
-import { SignupComponent } from './signup/signup.component';
-import { DummyComponent } from './dummy/dummy.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents,
-    LoginComponent,
-    LogoutComponent,
-    SignupComponent,
-    DummyComponent,
+    routingComponents
   ],
   imports: [
     BrowserModule,

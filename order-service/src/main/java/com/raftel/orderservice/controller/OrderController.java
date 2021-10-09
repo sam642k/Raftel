@@ -3,6 +3,7 @@ package com.raftel.orderservice.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,6 @@ public class OrderController {
 	@Autowired
 	IdRepository idRepo;
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
 	@PostMapping("")
 	public void addOrder(@RequestBody Order order) {
 		IdGenerator idGen= idRepo.findById("orderId").get();
@@ -59,26 +57,30 @@ public class OrderController {
 			if(order.getCustomerId()==userId)
 				orders.add(order);
 		});
+		Collections.reverse(orders);
 		return orders;
 	}
 	
-	@GetMapping("/all/items/{userId}")
-	public Collection<Collection<Item>> getAllItems(@PathVariable("userId") int userId){
-		Collection<Collection<Item>> list= new ArrayList<>();
-		getAllOrders(userId).forEach(order->list.add(order.getItems().values()));
-		return list;
+	@GetMapping("/{orderId}")
+	public Order getOrder(@PathVariable("orderId") int orderId) {
+		return orderRepo.findById(orderId).get();
 	}
 	
-	@GetMapping("/{userId}")
-	public Order getOrder(@PathVariable("userId") int userId) {
+	@GetMapping("/items/{orderId}")
+	public Collection<Item> getItems(@PathVariable("orderId") int orderId) {
+		return getOrder(orderId).getItems().values();
+	}
+	
+	@GetMapping("/recent/{userId}")
+	public Order getRecentOrder(@PathVariable("userId") int userId) {
 		
 		List<Order> orders= getAllOrders(userId);
-		return orders.get(orders.size()-1);
+		return orders.get(0);
 	}
 	
-	@GetMapping("/items/{userId}")
-	public Collection<Item> getItems(@PathVariable("userId") int userId){
-		return getOrder(userId).getItems().values();
+	@GetMapping("/recent/items/{userId}")
+	public Collection<Item> getRecentItems(@PathVariable("userId") int userId){
+		return getRecentOrder(userId).getItems().values();
 	}
 	
 }

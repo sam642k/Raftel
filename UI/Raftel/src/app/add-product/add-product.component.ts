@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CatalogService } from '../services/catalog.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class AddProductComponent implements OnInit {
     description: ['']
   });
 
-  constructor(public fb: FormBuilder, public catalogService: CatalogService) { }
+  constructor(public fb: FormBuilder, public catalogService: CatalogService, public router: Router) { }
 
   ngOnInit(): void {
     this.name= sessionStorage.getItem('name') || '';
@@ -32,6 +33,7 @@ export class AddProductComponent implements OnInit {
     console.log(product);
     
     this.catalogService.addProduct(product).subscribe();
+    this.router.navigate(['']);
   }
 
   onFileUpload(event: any){

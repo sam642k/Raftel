@@ -22,8 +22,8 @@
 </nav>
 
 <div class="content">
-<h1>Order Successful</h1>
-
+<h1 *ngIf="orderId==-1">Order Successful</h1>
+<h3><strong>Order Id:</strong> {{order.id}}</h3>
 <table class="table container">
     <tr>
         <th></th>
@@ -32,15 +32,15 @@
         <th>Quantity</th>
     </tr>
     <tr *ngFor="let item of items">
-        <td><img src="{{item.image}}" height="80px"></td>
+        <td><img src="{{item.image}}" height="100px"></td>
         <td>{{item.prodName}}</td>
         <td>{{item.price}}</td>
         <td>{{item.quantity}}</td>
     </tr>
     <tr>
-        <td>Amount Paid: {{order.amount}}</td>
-        <td></td>
-        <td>Satus: {{order.status}}</td>
+        <td><strong>Amount Paid:</strong> {{order.amount}}</td>
+        <td><strong>Order Placed On:</strong>{{order.date}}</td>
+        <td><strong>Satus:</strong> {{order.status}}</td>
     </tr>
 </table>
 </div>

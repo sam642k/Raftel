@@ -14,12 +14,24 @@ export class OrderService {
     return this.http.post<OrderModel>(`http://localhost:8050/order`, order);
   }
 
-  getOrder(userId: number){
-    return this.http.get<OrderModel>(`http://localhost:8050/order/${userId}`);
+  getRecentOrder(userId: number){
+    return this.http.get<OrderModel>(`http://localhost:8050/order/recent/${userId}`);
   }
 
-  getItems(userId: number){
-    return this.http.get<ItemModel[]>(`http://localhost:8050/order/items/${userId}`);
+  getRecentItems(userId: number){
+    return this.http.get<ItemModel[]>(`http://localhost:8050/order/recent/items/${userId}`);
+  }
+
+  getAllOrders(userId: number){
+    return this.http.get<OrderModel[]>(`http://localhost:8050/order/all/${userId}`);
+  }
+
+  getOrder(orderId:number){
+    return this.http.get<OrderModel>(`http://localhost:8050/order/${orderId}`);
+  }
+
+  getItems(orderId: number){
+    return this.http.get<ItemModel>(`http://localhost:8050/order/items/${orderId}`);
   }
 
 }

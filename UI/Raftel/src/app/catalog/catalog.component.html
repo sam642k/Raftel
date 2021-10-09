@@ -21,6 +21,9 @@
           <li *ngIf="!isLoggedIn" class="nav-item">
             <a class="nav-link" routerLink="/register">Sign up</a>
           </li>
+          <li *ngIf="admin" class="nav-item">
+            <a class="nav-link" routerLink="/add-product">Add Product</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -36,7 +39,9 @@
             <div class="card-body">
                 <a routerLink='/product/{{product.id}}'><h4 class=" card-title"><b>{{product.name}}</b></h4></a>
                 <p>{{product.description.slice(0,25)+"..."}}</p>
-                <b>{{product.price}}</b>
+                <b>{{product.price}}</b><br>
+                <button *ngIf="admin" class="btn btn-success" routerLink="/edit-product/{{product.id}}">Edit</button>
+                <button *ngIf="admin" class="btn btn-danger" (click)="delete(product.id)">Delete</button>
             </div>
         </div>
     </div>
