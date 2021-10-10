@@ -16,7 +16,7 @@
             <a class="nav-link" routerLink="/login">Sign in</a>
           </li>
           <li *ngIf="isLoggedIn" class="nav-item">
-            <a class="nav-link" routerLink="/logout">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <li *ngIf="!isLoggedIn" class="nav-item">
             <a class="nav-link" routerLink="/register">Sign up</a>
@@ -41,7 +41,7 @@
                 <p>{{product.description.slice(0,25)+"..."}}</p>
                 <b>{{product.price}}</b><br>
                 <button *ngIf="admin" class="btn btn-success" routerLink="/edit-product/{{product.id}}">Edit</button>
-                <button *ngIf="admin" class="btn btn-danger" (click)="delete(product.id)">Delete</button>
+                <button *ngIf="admin" class="btn btn-danger" (click)="delete(product)">Delete</button>
             </div>
         </div>
     </div>

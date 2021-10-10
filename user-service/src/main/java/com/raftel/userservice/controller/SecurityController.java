@@ -63,13 +63,13 @@ public class SecurityController {
 	
 	
 	@PostMapping("/register")
-	public boolean register(@RequestBody User user) {
+	public String register(@RequestBody User user) {
 		System.out.println(user);
 		List<String> usernames= new ArrayList<>();
 		userRepo.findAll().forEach(u-> usernames.add(u.getUsername()));
 		
 		if(usernames.contains(user.getUsername()))
-			return false;
+			return "-1";
 		
 		IdGenerator idGen= idRepo.findById("userId").get();
 		user.setId(idGen.getSeq());
@@ -78,7 +78,7 @@ public class SecurityController {
 		user.setRole("USER");
 		userRepo.save(user);
 		
-		return true;
+		return user.getId()+"";
 		
 	}
 	

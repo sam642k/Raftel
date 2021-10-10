@@ -32,8 +32,7 @@ export class AddProductComponent implements OnInit {
     let {imagesource, ...product}= this.productForm.value;
     console.log(product);
     
-    this.catalogService.addProduct(product).subscribe();
-    this.router.navigate(['']);
+    this.catalogService.addProduct(product).subscribe(()=>this.router.navigate(['']));
   }
 
   onFileUpload(event: any){

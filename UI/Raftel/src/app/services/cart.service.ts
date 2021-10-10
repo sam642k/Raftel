@@ -36,4 +36,8 @@ export class CartService {
     return this.http.get<Number>(`http://localhost:8050/cart/cartItems/${userId}`);
   }
 
+  createCart(userId: number){
+    return this.http.post(`http://localhost:8050/cart/create/${userId}`, {});
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { CatalogService } from '../services/catalog.service';
@@ -16,8 +16,9 @@ export class ProductComponent implements OnInit {
   public product: any;
   public isLoggedIn= false;
   public name='';
+  public userId=-1;
 
-  constructor(private authService: AuthService,private catalogService: CatalogService, private cartService: CartService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private authService: AuthService,private catalogService: CatalogService, private cartService: CartService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => this.id= parseInt(params.get('id') || '-1'));
@@ -26,11 +27,14 @@ export class ProductComponent implements OnInit {
     });
     this.isLoggedIn= this.authService.isLoggedIn();
     this.name=sessionStorage.getItem('name') || '';
-    
+    this.userId= parseInt(sessionStorage.getItem('userId') || '-1');
   }
 
   addToCart(){
-    this.cartService.addToCart(1, this.product.id).subscribe();
+    if(this.isLoggedIn)
+    this.cartService.addToCart(this.userId, this.product.id).subscribe();
+    else
+    this.router.navigate(['login']);
   }
 
 }

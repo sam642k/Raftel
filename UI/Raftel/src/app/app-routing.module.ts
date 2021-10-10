@@ -16,7 +16,7 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {path:'', component: CatalogComponent},
-  {path:'product/:id', component: ProductComponent, canActivate:[AuthGuradService]},
+  {path:'product/:id', component: ProductComponent},
   {path:'add-product', component: AddProductComponent, canActivate:[AuthGuradService]},
   {path:'edit-product/:id', component: EditProductComponent, canActivate:[AuthGuradService]},
   {path:'cart', component: CartComponent, canActivate:[AuthGuradService]},

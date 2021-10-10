@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-signup',
@@ -28,15 +29,16 @@ export class SignupComponent implements OnInit {
     state: ['', [Validators.required]],
     country: ['', [Validators.required]]
   })
-  constructor(private fb: FormBuilder, private authService: AuthService, public router: Router) { }
+  constructor(private fb: FormBuilder,private cartService: CartService, private authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
 
   register(){
+    let userId=-1;
     let {cpassword, ...user}= this.signupForm.value;
     user.address=this.address.value;
-    this.authService.register(user).subscribe(data=> console.log(data));
+    this.authService.register(user).subscribe(data=> this.cartService.createCart(Number(data)).subscribe());
     this.router.navigate(['/login']);
   }
 

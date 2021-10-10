@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
 
     this.cartService.getItems(this.userId).subscribe(data=>{
       this.items=data;
-      console.log(this.items[0].prodName);
+      console.log(this.items);
     });
 
     this.cartService.cartItems(this.userId).subscribe(data=>{
@@ -78,17 +78,22 @@ export class CartComponent implements OnInit {
 
   checkOut(){
     console.log(this.cart.items);
-    
-    let order={
-      id: -1,
-      customerId: this.userId,
-      amount: this.cart.total,
-      items: this.cart.items,
-      date: null,
-      status: "Delivered"
-    };
-    this.cartService.clearCart(this.userId).subscribe();
+    let order: any;
+    this.cartService.getCart(this.userId).subscribe(data =>{
+      this.cart=data;
+      console.log(this.cart);
+      order={
+        id: -1,
+        customerId: this.userId,
+        amount: this.cart.total,
+        items: this.cart.items,
+        date: null,
+        status: "Delivered"
+      };
+      this.cartService.clearCart(this.userId).subscribe();
     this.orderService.checkOut(order).subscribe(data=> this.router.navigate(['/order', '-1']));
+    });
+    
 
   }
 

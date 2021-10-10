@@ -14,14 +14,13 @@ export class LoginComponent implements OnInit {
     username: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(8)]]
   });
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   login(){
     this.authService.authenticate(this.loginForm.value.username, this.loginForm.value.password);
-    this.router.navigate([''])
   }
 
 }

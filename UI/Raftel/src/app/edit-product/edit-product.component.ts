@@ -24,18 +24,22 @@ export class EditProductComponent implements OnInit {
     this.name= sessionStorage.getItem('name') || '';
     this.catalogService.getProduct(this.prodId).subscribe(data=>{
       this.productForm= this.fb.group({
+        id: [data.id],
         name: [data.name, [Validators.required, Validators.minLength(3)]],
         category: [data.category, [Validators.required]],
         price: [data.price, [Validators.required]],
         imagesource: [data.image, [Validators.required]],
-        image: [''],
-        description: ['']
+        image: [data.image],
+        description: [data.description]
       });
     });
   }
 
   editProduct(){
-
+    let {imagesource, ...product}= this.productForm.value;
+    console.log(product);
+    this.catalogService.editProduct(product).subscribe();
+    this.router.navigate(['']);
   }
 
   onFileUpload(event: any){

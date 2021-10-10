@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { ProductModel } from '../models/product-model';
 import { AuthService } from '../services/auth.service';
 import { CatalogService } from '../services/catalog.service';
@@ -14,7 +16,7 @@ export class CatalogComponent implements OnInit {
   public isLoggedIn= false;
   public name='';
   public products: ProductModel[]=[];
-  constructor(private catalogService: CatalogService, private authService: AuthService) { }
+  constructor(private catalogService: CatalogService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.catalogService.getAllProducts().subscribe(data =>{
@@ -29,8 +31,45 @@ export class CatalogComponent implements OnInit {
     
   }
 
-  delete(id: number){
-    this.catalogService.deleteProduct(id).subscribe();
-  }
+  delete(product: ProductModel){
+    Swal.fire({
+        title: 'Are you sure?',
+        text: '',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.value) {
+          this.catalogService.deleteProduct(product.id).subscribe();
+          this.products.forEach((p,i)=>{
+            if(p==product)
+            this.products.splice(i,1);
+          })
+            Swal.fire(
+                'Removed!',
+                'Product has removed.',
+                'success'
+            )
+        } 
+    })
+}
+
+logout(){
+  Swal.fire({
+    title: 'Are you sure?',
+    text: '',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'Cancel'
+}).then((result) => {
+    if (result.value) {
+      this.router.navigate(['/logout']);
+    } 
+})
+}
+
+
 
 }

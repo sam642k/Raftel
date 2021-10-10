@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscriber } from 'rxjs';
 import { UserModel } from '../models/user-model';
 
@@ -8,7 +9,7 @@ import { UserModel } from '../models/user-model';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   authenticate(username: string, password: string){
     return this.http.post("http://localhost:8050/user/authenticate", {username: username, password: password})
@@ -21,7 +22,7 @@ export class AuthService {
         console.log(token);
         sessionStorage.setItem('userId', userData.userId);
         sessionStorage.setItem('name', userData.name);
-        return userData;
+        this.router.navigate(['']);
       }
     );
   }
