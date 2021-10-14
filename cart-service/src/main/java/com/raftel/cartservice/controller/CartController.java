@@ -115,7 +115,11 @@ public class CartController {
 	@GetMapping("/cartItems/{userId}")
 	public int noOfCartItems(@PathVariable("userId") int userId) {
 		Cart cart= getCart(userId);
-		return cart.getItems().size();
+		int total=0;
+		for(Item item: cart.getItems().values()) {
+			total+=item.getQuantity();
+		}
+		return total;
 	}
 	
 	

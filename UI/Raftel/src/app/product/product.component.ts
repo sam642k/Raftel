@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit {
   public isLoggedIn= false;
   public name='';
   public userId=-1;
-
+  public cartItems=0;
   constructor(private router: Router, private authService: AuthService,private catalogService: CatalogService, private cartService: CartService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -28,11 +28,14 @@ export class ProductComponent implements OnInit {
     this.isLoggedIn= this.authService.isLoggedIn();
     this.name=sessionStorage.getItem('name') || '';
     this.userId= parseInt(sessionStorage.getItem('userId') || '-1');
+    this.cartService.cartItems(this.userId).subscribe(data=> this.cartItems=Number(data));
   }
 
   addToCart(){
     if(this.isLoggedIn)
-    this.cartService.addToCart(this.userId, this.product.id).subscribe();
+    this.cartService.addToCart(this.userId, this.product.id).subscribe(data=>{
+        this.cartItems++
+    });
     else
     this.router.navigate(['login']);
   }

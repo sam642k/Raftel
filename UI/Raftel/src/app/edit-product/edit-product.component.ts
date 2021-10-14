@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 import { CatalogService } from '../services/catalog.service';
 
 @Component({
@@ -14,10 +15,11 @@ export class EditProductComponent implements OnInit {
   categories=["Electronics", "Clothing", "Sports"];
   product: any;
   prodId=-1;
-
+  cartItems=0;
+  userId=-1;
   productForm: any;
 
-  constructor(public fb: FormBuilder, public catalogService: CatalogService, public router: Router, public route: ActivatedRoute) { }
+  constructor(public fb: FormBuilder,public cartService: CartService, public catalogService: CatalogService, public router: Router, public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap)=> this.prodId= parseInt(params.get('id')||'-1'));
@@ -33,6 +35,8 @@ export class EditProductComponent implements OnInit {
         description: [data.description]
       });
     });
+    this.userId=parseInt(sessionStorage.getItem('userId') || '-1');
+    this.cartService.cartItems(this.userId).subscribe(data=> this.cartItems=Number(data));
   }
 
   editProduct(){

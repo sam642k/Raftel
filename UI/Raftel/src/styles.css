@@ -9,7 +9,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .content{
     margin-top: 80px;
-}
+}   
 
 button{
     margin: 3px;
@@ -21,4 +21,11 @@ input:valid{
 
 input{
     margin: 3px;
+}
+
+.badge{
+    position: relative;
+    right: 10px;
+    bottom: 5px;
+    font-size: 12px;
 }

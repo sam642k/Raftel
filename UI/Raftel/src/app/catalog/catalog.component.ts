@@ -1,8 +1,10 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ProductModel } from '../models/product-model';
 import { AuthService } from '../services/auth.service';
+import { CartService } from '../services/cart.service';
 import { CatalogService } from '../services/catalog.service';
 
 
@@ -16,7 +18,9 @@ export class CatalogComponent implements OnInit {
   public isLoggedIn= false;
   public name='';
   public products: ProductModel[]=[];
-  constructor(private catalogService: CatalogService, private authService: AuthService, private router: Router) { }
+  public cartItems=0;
+  public userId=-1;
+  constructor(private cartService: CartService, private catalogService: CatalogService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.catalogService.getAllProducts().subscribe(data =>{
@@ -25,9 +29,11 @@ export class CatalogComponent implements OnInit {
     });
     this.isLoggedIn= this.authService.isLoggedIn();
     this.name=sessionStorage.getItem('name') || '';
-    if(parseInt(sessionStorage.getItem('userId') || '')==1){
+    this.userId=parseInt(sessionStorage.getItem('userId') || '-1');
+    if(this.userId==1){
       this.admin=true;
     }
+    this.cartService.cartItems(this.userId).subscribe(data=> this.cartItems=Number(data));
     
   }
 

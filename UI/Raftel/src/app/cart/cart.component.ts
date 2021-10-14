@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   public name= '';
   public cart: any;
   public items: ItemModel[]=[];
-  public noOfItems: Number=0;
+  public cartItems=0;
   public itemsExist: any;
   constructor(private router: Router, private route: ActivatedRoute, private catalogService: CatalogService, private cartService: CartService, private orderService: OrderService) { }
   
@@ -38,12 +38,10 @@ export class CartComponent implements OnInit {
     });
 
     this.cartService.cartItems(this.userId).subscribe(data=>{
-      this.noOfItems=data;
-      if(this.noOfItems>0){
+      this.cartItems=Number(data);
+      if(this.cartItems>0)
         this.itemsExist=true;
-      }
-    });
-
+      });
   }
 
   addToCart(item: ItemModel){

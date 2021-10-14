@@ -17,6 +17,7 @@ export class OrderComponent implements OnInit {
   public order: any;
   public items: any;
   public name='';
+  public cartItems=0;
   constructor(public cartService: CartService, public orderService: OrderService, public route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -40,7 +41,10 @@ export class OrderComponent implements OnInit {
       this.orderService.getOrder(this.orderId).subscribe(data=> this.order=data);
       this.orderService.getItems(this.orderId).subscribe(data=> this.items=data);
     }
+
+    this.cartService.cartItems(this.userId).subscribe(data=> this.cartItems=Number(data));
     
   }
+  
 
 }

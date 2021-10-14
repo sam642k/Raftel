@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 import { CatalogService } from '../services/catalog.service';
 
 @Component({
@@ -10,7 +11,9 @@ import { CatalogService } from '../services/catalog.service';
 })
 export class AddProductComponent implements OnInit {
 
+  userId=-1;
   name='';
+  cartItems=0;
   categories=["Electronics", "Clothing", "Sports"];
 
   productForm= this.fb.group({
@@ -22,10 +25,12 @@ export class AddProductComponent implements OnInit {
     description: ['']
   });
 
-  constructor(public fb: FormBuilder, public catalogService: CatalogService, public router: Router) { }
+  constructor(public cartService: CartService, public fb: FormBuilder, public catalogService: CatalogService, public router: Router) { }
 
   ngOnInit(): void {
     this.name= sessionStorage.getItem('name') || '';
+    this.userId=parseInt(sessionStorage.getItem('userId') || '-1');
+    this.cartService.cartItems(this.userId).subscribe(data=> this.cartItems=Number(data));
   }
 
   addNewProduct(){
